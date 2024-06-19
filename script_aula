@@ -5,3 +5,20 @@ library(knitr)
 library(MASS)
 library(base)
 library(graphics)
+
+
+#aula 19/06
+
+mean(turma_farm_1$idade)
+sd(turma_farm_1$idade)
+pnorm(22, mean = 22.9, sd=4.4)  #probabilidade de ser menor que 22
+pnorm(22, mean = 22.9, sd = 4.4, lower.tail=F) #probabilidade de ser maior que 22
+
+#A hipótese nula do teste de Shapiro-Wilk é que 
+#a população possui distribuição normal. 
+#Portanto, um valor de p < 0.05 
+#indica que você rejeitou a hipótese nula, 
+#ou seja, seus dados não possuem distribuição normal.
+
+shapiro.test(turma_farm_1$idade)
+shapiro.test(turma_farm_1$mora)
