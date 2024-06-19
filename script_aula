@@ -1,0 +1,7 @@
+library(descr)
+library(ggplot2)
+library(magrittr)
+library(knitr)
+library(MASS)
+library(base)
+library(graphics)
