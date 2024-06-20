@@ -14,11 +14,67 @@ sd(turma_farm_1$idade)
 pnorm(22, mean = 22.9, sd=4.4)  #probabilidade de ser menor que 22
 pnorm(22, mean = 22.9, sd = 4.4, lower.tail=F) #probabilidade de ser maior que 22
 
+
+############################################   AULA 20/06 ########################################
+library(descr)
+library(ggplot2)
+library(magrittr)
+library(knitr)
+library(MASS)
+library(base)
+library(graphics)
+install.packages("pacman")
+library(pacman)
+install.packages("car")
+library(car)
+
+#aula 20/06
 #A hipótese nula do teste de Shapiro-Wilk é que 
 #a população possui distribuição normal. 
 #Portanto, um valor de p < 0.05 
 #indica que você rejeitou a hipótese nula, 
 #ou seja, seus dados não possuem distribuição normal.
-
+hist(turma_farm_1$idade)
 shapiro.test(turma_farm_1$idade)
 shapiro.test(turma_farm_1$mora)
+
+#curva de distribuição normal
+plot(function(x) dnorm(x,30,5), 15, 45, ylab = "f(x)", main =
+       "Distribuição N(30,5)")
+
+#gerando uma amostra de distribuição normal
+dados<- rnorm(200, 20, 5)
+hist(dados)
+boxplot(dados)
+shapiro.test(dados)
+
+hist(dados) 
+
+mod<-lm(idade ~ mora, turma_farm_1)
+par(mfrow=c(2,2))
+
+plot(mod)
+shapiro.test(mod$residuals)
+summary(mod)
+
+
+t.test(mod$coefficients)
+t.test(mod$effects)
+
+durbinWatsonTest(mod)
+
+#teste de correlação
+cor.test(turma_farm_1$idade, turma_farm_1$mora, method = c("pearson"))
+
+id<- c(21, 10, 14, 21, 22, 30)
+alt<- c(160, 100, 120, 165, 168, 170)
+
+
+cor.test(id, alt, method = c("pearson"))
+ggplot()+
+  aes(x=id, y=alt)+
+  geom_point()
+
++
+  geom_smooth(method = "lm")
+
