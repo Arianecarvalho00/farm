@@ -1,4 +1,133 @@
+#######################################   AULA 17/06  ##########################################
 library(descr)
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("magritt")
+library(magrittr)
+install.packages("knitr")
+library(knitr)
+library(MASS)
+library(base)
+
+
+#visualizando frequencias#
+
+table(turma_farm_1$idade)
+table(turma_farm_1$idade, turma_farm_1$sexo)
+table(turma_farm_1$med_continuo)
+      
+#visualizando medidas de tendencia central
+summary(turma_farm_1$idade)
+summary(turma_farm_1$mora)
+
+mean(turma_farm_1$idade) #media
+median(turma_farm_1$idade) #mediana
+mod = table(turma_farm_1$idade)   #moda
+(moda = names(mod)[tab == max(mod)])
+
+sd(turma_farm_1$idade) #desvio padrão
+
+
+#juntando informações em uma tabela única
+Media=mean(turma_farm_1$idade)
+Desvio=sd(turma_farm_1$idade)
+Variancia=var(turma_farm_1$idade)
+Maximo=max(turma_farm_1$idade)
+Minimo=min(turma_farm_1$idade)
+Mediana=median(turma_farm_1$idade)
+descritiva=cbind(Media,
+                 Desvio, 
+                 Variancia, 
+                 Maximo, 
+                 Minimo, 
+                 Mediana)
+
+#########################################   AULA 18/06  #########################################
+library(descr)
+library(ggplot2)
+library(magrittr)
+library(knitr)
+install.packages("MASS")
+library(MASS)
+install.packages("base")
+library(base)
+install.packages("graphics")
+library(graphics)
+
+
+
+#fazendo histogramas
+hist(turma_farm_1$idade)
+hist(turma_farm_1$idade, col= c("orange"))
+hist(turma_farm_1$idade, col= c("orange", "blue"), border = FALSE)
+hist(turma_farm_1$idade, col= c("orange", "blue", "red", "pink"), main="idade dos estudantes de farmácia da femaf")
+hist(turma_farm_1$idade, col= c("orange"), main="idade dos estudantes de farmácia da femaf", xlab="idade", ylab="frequência")
+
+hist(turma_farm_1$idade, col= c("red"), freq = FALSE)
+
+
+
+
+#fazendo gráfico de barra
+barplot(turma_farm_1$idade)
+
+barplot(table(turma_farm_1$sexo), col=c("blue","red"), 
+        ylim=c(0,25), 
+        space=.8, width=c(.2,.2), 
+        main="estudantes de farmácia da femaf de acordo com sexo")
+
+
+
+
+
+
+#fazedno grafico de pontos
+turma_farm_1%>%
+  ggplot()+
+  aes(x=mora, y=idade)+
+  geom_point()+
+  geom_smooth(method = "lm")
+
+
+
+turma_farm_1%>%
+  ggplot()+
+  aes(x=mora, y=idade, color=filhos)+
+  geom_point()
+
+
+ggplot(data = turma_farm_1) +
+  geom_bar(aes(x = filhos, y = med_depre,fill = sexo), stat = "identity") +
+  ggtitle("alunos farmacia")
+
+
+
+#fazedno gráfico de linha
+plot(turma_farm_1$idade, type="l")
+
+
+
+
+#fazendo boxplot
+boxplot(turma_farm_1$idade)
+boxplot(idade ~ est_civil, col= c("red", "pink"), data=turma_farm_1)
+boxplot(idade ~ med_depre, col= c("orange", "yellow"), data = turma_farm_1)
+boxplot(idade ~ mora, col=c("blue", "green", "violet", "gray", "salmon", "khaki"), data=turma_farm_1)
+boxplot(mora ~ med_continuo, col=c("blue", "green"), main= "relação entre moradores e uso de medicamentos contínuos",data=turma_farm_1)
+boxplot(idade ~ est_civil, col=c("orange", "yellow", "red"),main="relação idade e estado civil", xlab="estado civil", ylab="idade", data = turma_farm_1)
+
+
+#grafico de pizza
+sexo1<-c(0,8, 0,2)
+names(sexo1)<-c("masculino", "feminino")
+pie(sexo1)
+
+
+plot(turma_farm_1$idade, type="l")
+
+
+
+#########################################   AULA 19/06  #########################################library(descr)
 library(ggplot2)
 library(magrittr)
 library(knitr)
@@ -7,7 +136,6 @@ library(base)
 library(graphics)
 
 
-#aula 19/06
 
 mean(turma_farm_1$idade)
 sd(turma_farm_1$idade)
