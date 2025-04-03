@@ -1,4 +1,4 @@
-#######################################   AULA 17/06  ##########################################
+#######################################   AULA 03 E 10/04 ##########################################
 library(descr)
 install.packages("ggplot2")
 library(ggplot2)
@@ -12,29 +12,30 @@ library(base)
 
 #visualizando frequencias#
 
-table(turma_farm_1$idade)
-table(turma_farm_1$idade, turma_farm_1$sexo)
-table(turma_farm_1$med_continuo)
+table(dados_farm$idade)
+table(dados_farm$idade, dados_farm$sexo)
+table(dados_farm$cor_preferida)
       
 #visualizando medidas de tendencia central
-summary(turma_farm_1$idade)
-summary(turma_farm_1$mora)
+summary(dados_farm$idade)
+summary(dados_farm$altura)
+summary(dados_farm$peso)
 
-mean(turma_farm_1$idade) #media
-median(turma_farm_1$idade) #mediana
-mod = table(turma_farm_1$idade)   #moda
+mean(dados_farm$idade) #media
+median(dados_farm$idade) #mediana
+mod = table(dados_farm$idade)   #moda
 (moda = names(mod)[tab == max(mod)])
 
-sd(turma_farm_1$idade) #desvio padrão
+sd(dados_farm$idade) #desvio padrão
 
 
 #juntando informações em uma tabela única
-Media=mean(turma_farm_1$idade)
-Desvio=sd(turma_farm_1$idade)
-Variancia=var(turma_farm_1$idade)
-Maximo=max(turma_farm_1$idade)
-Minimo=min(turma_farm_1$idade)
-Mediana=median(turma_farm_1$idade)
+Media=mean(dados_farm$idade)
+Desvio=sd(dados_farm$idade)
+Variancia=var(dados_farm$idade)
+Maximo=max(dados_farm$idade)
+Minimo=min(dados_farm$idade)
+Mediana=median(dados_farm$idade)
 descritiva=cbind(Media,
                  Desvio, 
                  Variancia, 
@@ -42,7 +43,7 @@ descritiva=cbind(Media,
                  Minimo, 
                  Mediana)
 
-#########################################   AULA 18/06  #########################################
+#########################################   parte 2  #########################################
 library(descr)
 library(ggplot2)
 library(magrittr)
@@ -57,21 +58,21 @@ library(graphics)
 
 
 #fazendo histogramas
-hist(turma_farm_1$idade)
-hist(turma_farm_1$idade, col= c("orange"))
-hist(turma_farm_1$idade, col= c("orange", "blue"), border = FALSE)
-hist(turma_farm_1$idade, col= c("orange", "blue", "red", "pink"), main="idade dos estudantes de farmácia da femaf")
-hist(turma_farm_1$idade, col= c("orange"), main="idade dos estudantes de farmácia da femaf", xlab="idade", ylab="frequência")
+hist(dados_farm$idade)
+hist(dados_farm$idade, col= c("orange"))
+hist(dados_farm, col= c("orange", "blue"), border = FALSE)
+hist(dados_farm$idade, col= c("orange", "blue", "red", "pink"), main="idade dos estudantes de farmácia da femaf")
+hist(dados_farm$idade, col= c("orange"), main="idade dos estudantes de farmácia da femaf", xlab="idade", ylab="frequência")
 
-hist(turma_farm_1$idade, col= c("red"), freq = FALSE)
+hist(dados_farm$idade, col= c("red"), freq = FALSE)
 
 
 
 
 #fazendo gráfico de barra
-barplot(turma_farm_1$idade)
+barplot(dados_farm$idade)
 
-barplot(table(turma_farm_1$sexo), col=c("blue","red"), 
+barplot(table(dados_farm$sexo), col=c("blue","red"), 
         ylim=c(0,25), 
         space=.8, width=c(.2,.2), 
         main="estudantes de farmácia da femaf de acordo com sexo")
@@ -82,52 +83,52 @@ barplot(table(turma_farm_1$sexo), col=c("blue","red"),
 
 
 #fazedno grafico de pontos
-turma_farm_1%>%
+dados_farm%>%
   ggplot()+
-  aes(x=mora, y=idade)+
+  aes(x=trabalha, y=idade)+
   geom_point()+
   geom_smooth(method = "lm")
 
 
 
-turma_farm_1%>%
+dados_farm%>%
   ggplot()+
-  aes(x=mora, y=idade, color=filhos)+
+  aes(x=trabalha, y=idade, color=filhos)+
   geom_point()
 
 
-ggplot(data = turma_farm_1) +
-  geom_bar(aes(x = filhos, y = med_depre,fill = sexo), stat = "identity") +
+ggplot(data = dados_farm) +
+  geom_bar(aes(x = trabalha, y = med_depre,fill = sexo), stat = "identity") +
   ggtitle("alunos farmacia")
 
 
 
 #fazedno gráfico de linha
-plot(turma_farm_1$idade, type="l")
+plot(dados_farm$idade, type="l")
 
 
 
 
 #fazendo boxplot
-boxplot(turma_farm_1$idade)
-boxplot(idade ~ est_civil, col= c("red", "pink"), data=turma_farm_1)
-boxplot(idade ~ med_depre, col= c("orange", "yellow"), data = turma_farm_1)
-boxplot(idade ~ mora, col=c("blue", "green", "violet", "gray", "salmon", "khaki"), data=turma_farm_1)
-boxplot(mora ~ med_continuo, col=c("blue", "green"), main= "relação entre moradores e uso de medicamentos contínuos",data=turma_farm_1)
-boxplot(idade ~ est_civil, col=c("orange", "yellow", "red"),main="relação idade e estado civil", xlab="estado civil", ylab="idade", data = turma_farm_1)
+boxplot(dados_farm$idade)
+boxplot(idade ~ trabalha, col= c("red", "pink"), data=dados_farm)
+boxplot(idade ~ sexo, col= c("orange", "yellow"), data = dados_farm)
+boxplot(idade ~ cidade, col=c("blue", "green", "violet", "gray", "salmon", "khaki"), data=dados_farm)
+boxplot(peso ~ cidade, col=c("blue", "green"), main= "relação entre peso e cidade",data=dados_farm)
+boxplot(altura ~ disciplina, col=c("orange", "yellow", "red"),main="relação entre altura e disciplina preferida", xlab="altura", ylab="Disciplina", data = dados_farm)
 
 
-#grafico de pizza
+#grafico de setores
 sexo1<-c(0,8, 0,2)
 names(sexo1)<-c("masculino", "feminino")
 pie(sexo1)
 
 
-plot(turma_farm_1$idade, type="l")
+plot(dados_farm$idade, type="l")
 
 
 
-#########################################   AULA 19/06  #########################################library(descr)
+#########################################   parte 3  #########################################library(descr)
 library(ggplot2)
 library(magrittr)
 library(knitr)
@@ -137,13 +138,13 @@ library(graphics)
 
 
 
-mean(turma_farm_1$idade)
-sd(turma_farm_1$idade)
-pnorm(22, mean = 22.9, sd=4.4)  #probabilidade de ser menor que 22
-pnorm(22, mean = 22.9, sd = 4.4, lower.tail=F) #probabilidade de ser maior que 22
+mean(dados_farm$idade)
+sd(dados_farm$idade)
+pnorm(22, mean = 22.9, sd=4.4)  #probabilidade de ser menor que 
+pnorm(22, mean = 22.9, sd = 4.4, lower.tail=F) #probabilidade de ser maior que 
 
 
-############################################   AULA 20/06 ########################################
+############################################   parte 4 ########################################
 library(descr)
 library(ggplot2)
 library(magrittr)
@@ -156,15 +157,15 @@ library(pacman)
 install.packages("car")
 library(car)
 
-#aula 20/06
+
 #A hipótese nula do teste de Shapiro-Wilk é que 
 #a população possui distribuição normal. 
 #Portanto, um valor de p < 0.05 
 #indica que você rejeitou a hipótese nula, 
 #ou seja, seus dados não possuem distribuição normal.
-hist(turma_farm_1$idade)
-shapiro.test(turma_farm_1$idade)
-shapiro.test(turma_farm_1$mora)
+hist(dados_farm$idade)
+shapiro.test(dados_farm$idade)
+shapiro.test(dados_farm$peso)
 
 #curva de distribuição normal
 plot(function(x) dnorm(x,30,5), 15, 45, ylab = "f(x)", main =
@@ -178,7 +179,7 @@ shapiro.test(dados)
 
 hist(dados) 
 
-mod<-lm(idade ~ mora, turma_farm_1)
+mod<-lm(idade ~ trabalha, dados_farm)
 par(mfrow=c(2,2))
 
 plot(mod)
@@ -192,7 +193,7 @@ t.test(mod$effects)
 durbinWatsonTest(mod)
 
 #teste de correlação
-cor.test(turma_farm_1$idade, turma_farm_1$mora, method = c("pearson"))
+cor.test(dados_farm$idade, dados_farm$mora, method = c("pearson"))
 
 id<- c(21, 10, 14, 21, 22, 30)
 alt<- c(160, 100, 120, 165, 168, 170)
@@ -200,7 +201,7 @@ alt<- c(160, 100, 120, 165, 168, 170)
 
 cor.test(id, alt, method = c("pearson"))
 ggplot()+
-  aes(x=id, y=alt)+
+  aes(x=dados_farm$idade, y=dados_farm$altura)+
   geom_point()
 
 +
