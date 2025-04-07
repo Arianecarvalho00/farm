@@ -6,9 +6,16 @@ install.packages("magritt")
 library(magrittr)
 install.packages("knitr")
 library(knitr)
+install.packages("MASS")
 library(MASS)
+install.packages("base")
 library(base)
-
+install.packages("graphics")
+library(graphics)
+install.packages("pacman")
+library(pacman)
+install.packages("car")
+library(car)
 
 #visualizando frequencias#
 
@@ -21,41 +28,9 @@ summary(dados_farm$idade)
 summary(dados_farm$altura)
 summary(dados_farm$peso)
 
-mean(dados_farm$idade) #media
-median(dados_farm$idade) #mediana
-mod = table(dados_farm$idade)   #moda
-(moda = names(mod)[tab == max(mod)])
 
-sd(dados_farm$idade) #desvio padrão
-
-
-#juntando informações em uma tabela única
-Media=mean(dados_farm$idade)
-Desvio=sd(dados_farm$idade)
-Variancia=var(dados_farm$idade)
-Maximo=max(dados_farm$idade)
-Minimo=min(dados_farm$idade)
-Mediana=median(dados_farm$idade)
-descritiva=cbind(Media,
-                 Desvio, 
-                 Variancia, 
-                 Maximo, 
-                 Minimo, 
-                 Mediana)
 
 #########################################   parte 2  #########################################
-library(descr)
-library(ggplot2)
-library(magrittr)
-library(knitr)
-install.packages("MASS")
-library(MASS)
-install.packages("base")
-library(base)
-install.packages("graphics")
-library(graphics)
-
-
 
 #fazendo histogramas
 hist(dados_farm$idade)
@@ -85,7 +60,7 @@ barplot(table(dados_farm$sexo), col=c("blue","red"),
 #fazedno grafico de pontos
 dados_farm%>%
   ggplot()+
-  aes(x=trabalha, y=idade)+
+  aes(x=peso, y=idade)+
   geom_point()+
   geom_smooth(method = "lm")
 
@@ -105,7 +80,6 @@ ggplot(data = dados_farm) +
 
 #fazedno gráfico de linha
 plot(dados_farm$idade, type="l")
-
 
 
 
@@ -129,15 +103,8 @@ plot(dados_farm$idade, type="l")
 
 
 #########################################   parte 3  #########################################library(descr)
-library(ggplot2)
-library(magrittr)
-library(knitr)
-library(MASS)
-library(base)
-library(graphics)
 
-
-
+#probabilidade
 mean(dados_farm$idade)
 sd(dados_farm$idade)
 pnorm(22, mean = 22.9, sd=4.4)  #probabilidade de ser menor que 
@@ -145,24 +112,15 @@ pnorm(22, mean = 22.9, sd = 4.4, lower.tail=F) #probabilidade de ser maior que
 
 
 ############################################   parte 4 ########################################
-library(descr)
-library(ggplot2)
-library(magrittr)
-library(knitr)
-library(MASS)
-library(base)
-library(graphics)
-install.packages("pacman")
-library(pacman)
-install.packages("car")
-library(car)
 
+#teste de normaidade
 
 #A hipótese nula do teste de Shapiro-Wilk é que 
 #a população possui distribuição normal. 
 #Portanto, um valor de p < 0.05 
 #indica que você rejeitou a hipótese nula, 
 #ou seja, seus dados não possuem distribuição normal.
+
 hist(dados_farm$idade)
 shapiro.test(dados_farm$idade)
 shapiro.test(dados_farm$peso)
@@ -174,10 +132,8 @@ plot(function(x) dnorm(x,30,5), 15, 45, ylab = "f(x)", main =
 #gerando uma amostra de distribuição normal
 dados<- rnorm(200, 20, 5)
 hist(dados)
-boxplot(dados)
 shapiro.test(dados)
 
-hist(dados) 
 
 mod<-lm(idade ~ trabalha, dados_farm)
 par(mfrow=c(2,2))
@@ -187,19 +143,20 @@ shapiro.test(mod$residuals)
 summary(mod)
 
 
+
+#teste de significância estatística
+
 t.test(mod$coefficients)
 t.test(mod$effects)
 
 durbinWatsonTest(mod)
 
+
+
 #teste de correlação
 cor.test(dados_farm$idade, dados_farm$mora, method = c("pearson"))
 
-id<- c(21, 10, 14, 21, 22, 30)
-alt<- c(160, 100, 120, 165, 168, 170)
 
-
-cor.test(id, alt, method = c("pearson"))
 ggplot()+
   aes(x=dados_farm$idade, y=dados_farm$altura)+
   geom_point()
